@@ -6,6 +6,10 @@
     <title>Sena | Seguimiento de Bitácoras</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -26,7 +30,7 @@
                 <li><a href="#" class="nav-item active" data-target="bitacoras-section"><i class="fas fa-book"></i> Bitácoras</a></li>
                 <li><a href="#" class="nav-item" data-target="dashboard-section"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="#" class="nav-item" data-target="daily-activity-section"><i class="fas fa-tasks"></i> Actividad Diaria</a></li>
-                <li><a href="#" class="nav-item" data-target="pdf-section"><i class="fas fa-file-pdf"></i> Generar PDF</a></li>
+                <li><a href="#" class="nav-item" data-target="pdf-section"><i class="fas fa-file-pdf"></i> Generar Reportes</a></li>
                 <li><a href="#" class="nav-item" data-target="settings-section"><i class="fas fa-cog"></i> Configuración</a></li>
                 <li><a href="#" class="nav-item" data-target="help-section"><i class="fas fa-question-circle"></i> Ayuda</a></li>
             </ul>
@@ -35,7 +39,7 @@
     <div class="sidebar-overlay"></div>
 
     <main class="main-container">
-        <section id="bitacoras-section" class="content-section">
+        <section id="bitacoras-section" class="content-section active">
             <h2 class="mt-4">Gestión de Bitácoras</h2>
 
             <div class="card bitacora-progress-summary">
@@ -127,7 +131,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
                 <p id="noBitacorasMessage" class="no-data-message" style="display: none;">No hay bitácoras registradas.</p>
@@ -137,7 +141,9 @@
                     <button id="nextBitacorasPage" class="btn-secondary">Siguiente <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
-        </section> <section id="daily-activity-section" class="content-section">
+        </section>
+
+        <section id="daily-activity-section" class="content-section">
             <h2 id="dailyActivitySectionTitle">Actividad Diaria</h2>
             <div class="card daily-activity-form-card">
                 <div class="form-group">
@@ -167,8 +173,7 @@
                 <h3>Actividades Registradas</h3>
                 <div class="table-actions">
                     <input type="text" id="searchActivities" class="search-input" placeholder="Buscar actividad...">
-                    <button id="exportActivitiesPdfBtn" class="btn-primary" style="display: none;"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
-                </div>
+                    </div>
                 <div class="table-responsive">
                     <table id="dailyActivitiesTable">
                         <thead>
@@ -179,7 +184,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
                 <p id="noActivitiesMessage" class="no-data-message" style="display: none;">No hay actividades registradas para esta bitácora.</p>
@@ -189,26 +194,59 @@
                     <button id="nextActivitiesPage" class="btn-secondary">Siguiente <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
-        </section> <section id="pdf-section" class="content-section">
-            <h2 id="pdfSectionTitle">Generar PDF de Bitácora</h2>
+        </section>
+
+        <section id="pdf-section" class="content-section">
+            <h2 id="pdfSectionTitle">Generar Reportes de Bitácora</h2>
             <div class="card">
                 <div class="form-group">
-                    <label for="selectBitacoraForPdf">Seleccionar Bitácora para PDF:</label>
+                    <label for="selectBitacoraForPdf">Seleccionar Bitácora para Reportes:</label>
                     <select id="selectBitacoraForPdf" required>
                         <option value="">Cargando bitácoras...</option>
                     </select>
                 </div>
                 <div id="pdfContentPreview">
-                    <p class="no-data-message">Selecciona una bitácora para previsualizar el PDF.</p>
+                    <p class="no-data-message">Selecciona una bitácora para previsualizar y generar los reportes.</p>
                 </div>
-                <button id="generatePdfBtn" class="btn-primary" style="display: none;"><i class="fas fa-file-pdf"></i> Generar y Descargar PDF</button>
-            </div>
-        </section> <section id="dashboard-section" class="content-section">
-            <h2 class="mt-4">Dashboard</h2>
-            <div class="card">
-                <p>Contenido del Dashboard aquí...</p>
+                <div class="button-container">
+                    <button id="generatePdfBtn" class="btn-primary" style="display: none;"><i class="fas fa-file-pdf"></i> Generar y Descargar PDF</button>
+                    <button id="generateExcelBtn" class="btn btn-success" style="display: none;"><i class="fas fa-file-excel"></i> Generar y Descargar Excel</button>
+                </div>
             </div>
         </section>
+<section id="dashboard-section" class="main-content-section" style="display: none;">
+    <h2>Dashboard de Progreso</h2>
+
+    <div class="card bitacora-progress-summary">
+        <h3>Progreso General de Bitácoras</h3>
+        <p><span id="bitacoras-completed-text">0</span> de <span id="bitacoras-total-text">0</span> Bitácoras Completadas</p>
+        <div class="progress-bar-container">
+            <div id="bitacoras-progress-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="dashboard-charts-container">
+        <div class="card chart-card">
+            <h3>Bitácoras Creadas vs. Esperadas</h3>
+            <canvas id="bitacorasProgressChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+            <h3>Tipos de Actividades Registradas</h3>
+            <canvas id="activityTypeChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+            <h3>Estado de Bitácoras</h3>
+            <canvas id="bitacoraStatusChart"></canvas>
+        </div>
+
+        <div class="card chart-card">
+            <h3>Horas de Actividad por Semana</h3>
+            <canvas id="hoursPerWeekChart"></canvas>
+        </div>
+    </div>
+</section>
 
         <section id="settings-section" class="content-section">
             <h2 class="mt-4">Configuración</h2>
@@ -229,8 +267,8 @@
         <p>&copy; 2025 SENA. Todos los derechos reservados.</p>
     </footer>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>

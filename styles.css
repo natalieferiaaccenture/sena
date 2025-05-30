@@ -10,12 +10,12 @@
 /* --- Variables CSS: Paleta de Colores y Estilos para un look tipo Notion --- */
 :root {
     /* Colores Principales - Adaptados a tu paleta de alto contraste y verde pastel */
-    --color-primary-green: #A0D9B3;      /* NUEVO: Verde pastel para acentos, botones primarios */
-    --color-dark-purple: #504E76;       /* Morado oscuro para texto principal en fondos claros, texto de inputs */
-    --color-black: #000000;              /* Negro puro para fondos de secciones clave (header, footer, sidebar) */
-    --color-white: #FFFFFF;              /* Blanco puro para fondos principales (body, cards, forms, tablas), texto sobre fondos oscuros, inputs */
-    --color-medium-gray: #C4C3E3;       /* Lila para bordes sutiles, botones secundarios, divisores (como en Notion) */
-    --color-light-gray-bg: #F8F8F8;     /* Un blanco muy suave para fondos de hover o sutiles diferencias (similar al gris claro de Notion) */
+    --color-primary-green: #A0D9B3;        /* NUEVO: Verde pastel para acentos, botones primarios */
+    --color-dark-purple: #504E76;          /* Morado oscuro para texto principal en fondos claros, texto de inputs */
+    --color-black: #000000;                /* Negro puro para fondos de secciones clave (header, footer, sidebar) */
+    --color-white: #FFFFFF;                /* Blanco puro para fondos principales (body, cards, forms, tablas), texto sobre fondos oscuros, inputs */
+    --color-medium-gray: #C4C3E3;          /* Lila para bordes sutiles, botones secundarios, divisores (como en Notion) */
+    --color-light-gray-bg: #F8F8F8;        /* Un blanco muy suave para fondos de hover o sutiles diferencias (similar al gris claro de Notion) */
 
     /* Colores de Alerta/Éxito/Advertencia */
     --color-success: #28a745;
@@ -34,6 +34,12 @@
     --spacing-md: 20px;
     --spacing-lg: 30px;
     --spacing-xl: 40px;
+
+    /* Colores específicos para botones PDF/Excel */
+    --pdf-red-opacity: #dc3545b3; /* Rojo con 70% de opacidad (b3 es 179 en hex, aprox 70%) */
+    --pdf-red-hover: #c82333b3;
+    --excel-green: #218838; /* Un verde más oscuro para Excel, diferente al primary-green si lo deseas */
+    --excel-green-hover: #1e7e34;
 }
 
 /* --- Base y Reset para un lienzo limpio --- */
@@ -64,7 +70,6 @@ body.sidebar-open {
     overflow: hidden;
 }
 
-
 /* Restablecer pesos de fuente para elementos específicos si es necesario */
 b, strong, th {
     font-weight: 700; /* Negrita para énfasis */
@@ -89,7 +94,9 @@ h3 {
 .mt-4 { margin-top: 2rem !important; }
 
 
-/* --- Header (Barra Superior - Estilo de barra de app) --- */
+/* --- Layout General --- */
+
+/* Header (Barra Superior - Estilo de barra de app) */
 .header {
     background-color: var(--color-black);
     color: var(--color-white);
@@ -131,7 +138,7 @@ h3 {
     flex-grow: 1; /* Permite que el título ocupe el espacio restante en el centro */
 }
 
-/* --- Menú Toggle Button (Icono de Hamburguesa) --- */
+/* Menú Toggle Button (Icono de Hamburguesa) */
 .menu-toggle {
     background: none;
     border: none;
@@ -149,7 +156,7 @@ h3 {
 }
 
 
-/* --- Sidebar (Menú Desplegable) --- */
+/* Sidebar (Menú Desplegable) */
 .sidebar {
     position: fixed;
     top: 0;
@@ -264,7 +271,7 @@ h3 {
 }
 
 /* Oculta todas las secciones de contenido por defecto */
-/* NOTA: Asegúrate que todas tus secciones principales (<section>) dentro de <main> tengan un ID y esta estructura */
+/* NOTA: Asegúrate que todas tus secciones principales (<section>) dentro de <main>) tengan un ID y esta estructura */
 main > section {
     display: none;
 }
@@ -409,7 +416,8 @@ main > section {
 }
 
 /* --- Buttons --- */
-.btn-primary, .btn-secondary {
+/* Estilos base para todos los botones */
+.btn-primary, .btn-secondary, .btn-warning, .btn-danger, .btn-pdf, .btn-excel {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -422,6 +430,7 @@ main > section {
     gap: 8px;
     box-shadow: none;
 }
+
 .btn-primary {
     background-color: var(--color-primary-green);
     color: var(--color-white);
@@ -443,6 +452,7 @@ main > section {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
+
 .btn-warning {
     background-color: var(--color-warning);
     color: var(--color-dark-purple);
@@ -450,12 +460,35 @@ main > section {
 .btn-warning:hover {
     background-color: #E2C58F;
 }
+
 .btn-danger {
     background-color: var(--color-danger);
     color: var(--color-white);
 }
 .btn-danger:hover {
     background-color: #C82333;
+}
+
+/* Estilo para el botón PDF (rojo opaco) */
+.btn-pdf {
+    background-color: var(--pdf-red-opacity); /* Rojo con opacidad */
+    color: var(--color-white);
+}
+
+.btn-pdf:hover {
+    background-color: var(--pdf-red-hover); /* Rojo más oscuro con opacidad al pasar el ratón */
+    transform: translateY(-1px);
+}
+
+/* Estilo para el botón Excel (ahora con el verde definido en --excel-green) */
+.btn-excel {
+    background-color: var(--excel-green); /* Verde para Excel */
+    color: var(--color-white);
+}
+
+.btn-excel:hover {
+    background-color: var(--excel-green-hover); /* Verde más oscuro al pasar el ratón */
+    transform: translateY(-1px);
 }
 
 
@@ -555,8 +588,6 @@ main > section {
     border: none;
     white-space: nowrap; /* Evita que los botones se rompan en varias líneas */
 }
-/* Colores de los botones de acción se definen globalmente arriba con .btn-warning, .btn-danger, etc. */
-
 
 /* Pagination */
 .pagination {
@@ -712,13 +743,16 @@ main > section {
     color: #666;
 }
 
-#generatePdfBtn {
-    display: block;
-    width: fit-content;
-    margin: var(--spacing-md) auto;
-    padding: 12px 25px;
-    font-size: 1.1em;
+/* Contenedor de botones de PDF/Excel */
+.button-container {
+    display: flex;
+    flex-direction: column; /* Por defecto, uno debajo del otro */
+    align-items: center; /* Centrar los botones */
+    gap: 1rem; /* Espaciado entre los botones */
+    margin-top: 1.5rem;
+    padding: 1rem 0; /* Padding razonable */
 }
+
 
 /* --- Responsive Layout (Mobile-First) --- */
 
@@ -745,7 +779,7 @@ main > section {
     }
     .menu-toggle {
         font-size: 1.5em;
-        padding: 0px; /* Reducir padding del botón de toggle */
+        padding: 0; /* Reducir padding del botón de toggle */
     }
 
     .sidebar {
@@ -803,7 +837,8 @@ main > section {
         flex-direction: column;
         gap: var(--spacing-xs);
     }
-    .btn-primary, .btn-secondary {
+    /* Asegura que los botones de acción ocupen todo el ancho en móviles */
+    .btn-primary, .btn-secondary, .btn-warning, .btn-danger, .btn-pdf, .btn-excel {
         width: 100%;
         padding: 8px 10px;
         font-size: 0.85em;
@@ -821,7 +856,7 @@ main > section {
         font-size: 0.85em;
     }
 
-    /* Mobile Table (Card View) - General (applies up to 767px, but scaled for smallest screens here) */
+    /* Mobile Table (Card View) */
     .table-responsive {
         box-shadow: none;
         border: none;
@@ -908,6 +943,9 @@ main > section {
     .signature-block {
         width: 100%; /* Ocupa todo el ancho disponible */
         max-width: 250px;
+    }
+    .button-container {
+        padding: 0.5rem 0; /* Ajustar padding en móvil */
     }
 }
 
@@ -1006,151 +1044,153 @@ main > section {
         font-size: 0.8em;
         min-height: auto;
     }
+    /* Estilos generales para el contenido del PDF */
+    .pdf-content-wrapper { /* Puedes envolver todo el contenido del PDF en un div con esta clase */
+        font-family: 'Arial', sans-serif;
+        font-size: 10pt;
+        line-height: 1.5;
+        color: #333;
+        padding: 20px; /* Margen interno para que no se pegue al borde de la página */
+    }
+
+    .pdf-header-info {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    .pdf-header-info h2 {
+        font-size: 16pt;
+        text-align: center;
+        margin-bottom: 15px;
+        color: #0056b3; /* Un color para el título */
+    }
+
+    .pdf-header-info p {
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        color: #0056b3;
+    }
+
+    /* Estilos para la tabla de actividades */
+    .pdf-preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .pdf-preview-table th,
+    .pdf-preview-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .pdf-preview-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .activity-header-row {
+        background-color: #e9e9e9;
+    }
+
+    /* Estilos para las firmas */
     .pdf-signatures {
-        flex-direction: row; /* Vuelve a layout horizontal */
-        justify-content: space-around;
-        gap: var(--spacing-md);
+        display: flex; /* Para poner las firmas lado a lado */
+        justify-content: space-around; /* Espacio entre ellas */
+        margin-top: 50px; /* Espacio después de las actividades */
+        padding-top: 20px; /* Espacio antes de las firmas */
+        border-top: 1px dashed #ccc; /* Una línea divisoria sutil */
+    }
+
+    .signature-block {
+        text-align: center;
+        width: 45%; /* Ancho para cada bloque de firma */
+        margin: 0 10px; /* Margen para separar si no están en `space-around` */
+    }
+
+    .signature-line {
+        border-bottom: 1px solid #000; /* La línea para la firma */
+        width: 80%; /* Longitud de la línea */
+        margin: 0 auto 10px auto; /* Centrar la línea */
+    }
+
+    .signature-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .signature-role {
+        font-size: 9pt;
+        color: #555;
+    }
+    /* Contenedor de botones de PDF/Excel */
+    .button-container {
+        flex-direction: row; /* En pantallas grandes, que estén uno al lado del otro */
+        justify-content: center;
+        gap: 1.5rem;
     }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    body {
-        font-size: 0.95em; /* Vuelve al tamaño de fuente base */
-    }
     .menu-toggle {
-        /* Si en escritorio siempre quieres el sidebar abierto, oculta el toggle */
-        display: none;
+        display: none; /* Oculta el botón de toggle en desktop si el sidebar está siempre visible */
     }
-    .sidebar {
-        /* Si quieres un sidebar siempre abierto, ajusta esto */
-        left: 0; /* Asegura que el sidebar esté visible en escritorio */
-        position: sticky; /* Se mantiene en la posición de scroll */
-        top: 0; /* Alineado con el top del viewport */
-        height: 100vh; /* Ocupa el alto completo del viewport */
-        padding-top: calc(var(--spacing-md) + 70px); /* Espacio para el header fijo */
-    }
-    .sidebar-overlay {
-        display: none; /* No se necesita overlay si el sidebar siempre está abierto */
-    }
-    body.sidebar-open {
-        overflow: auto; /* Permite el scroll del body en escritorio */
-    }
-
-    .main-container {
-        /* Si el sidebar es sticky y "empuja" el contenido */
-        margin-left: 280px; /* Ancho del sidebar */
-        margin-top: calc(var(--spacing-lg) + 70px); /* Ajuste para el header fijo */
-        grid-template-columns: 0.8fr 1.2fr; /* Layout de dos columnas para secciones */
-    }
-    .bitacora-period-section {
-        grid-column: 1 / 2;
-    }
-    .bitacoras-list {
-        grid-column: 2 / 3;
-    }
-    .daily-activity-section, #pdf-section {
-        grid-column: 1 / -1; /* Estas secciones ocupan todo el ancho */
-    }
-    #bitacoraPeriodForm, #dailyActivityForm {
-        grid-template-columns: repeat(2, 1fr); /* Dos columnas en formularios */
-    }
-    .pdf-signatures {
-        justify-content: space-around;
-    }
+    /* Si ocultas el toggle y el sidebar está siempre abierto en desktop, ajusta left del sidebar a 0 y margin-left del main-container */
+    /* .sidebar { left: 0; } */
+    /* .main-container { margin-left: 280px; } */
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    .main-container {
-        max-width: 1500px; /* Aumenta el ancho máximo para pantallas muy grandes */
-        grid-template-columns: 0.7fr 1.3fr; /* Ajuste de proporción si es necesario */
-    }
+/* css/styles.css */
+
+/* ... (tu CSS existente) ... */
+
+/* Dashboard Layout */
+.dashboard-charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 columnas en pantallas grandes, 1 en pequeñas */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
 }
 
+.chart-card {
+    height: 350px; /* Altura fija para los contenedores de gráficos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    padding: var(--spacing-sm); /* Un poco menos de padding para el gráfico */
+}
 
-/* Print styles */
-@media print {
-    body {
-        background-color: #fff;
-        color: #000;
-        font-size: 12pt;
+.chart-card h3 {
+    margin-bottom: var(--spacing-sm); /* Espacio debajo del título del gráfico */
+    text-align: center;
+    border-bottom: none; /* Quitar borde si no es necesario en card */
+    padding-bottom: 0;
+    font-size: 1.1em;
+    color: var(--color-dark-purple);
+}
+
+.chart-card canvas {
+    max-height: calc(100% - 40px); /* Altura máxima del canvas, dejando espacio para el título */
+    width: 100% !important; /* Asegura que el canvas ocupe el ancho disponible */
+    height: 100% !important; /* Asegura que el canvas ocupe la altura disponible */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 767px) {
+    .dashboard-charts-container {
+        grid-template-columns: 1fr; /* Una columna en móviles */
     }
-    /* Oculta elementos que no son relevantes para la impresión */
-    .header, .footer, .bitacora-period-section, .table-actions, .pagination, .action-buttons,
-    #dailyActivityForm, #dailyActivitySectionTitle, .sidebar, .sidebar-overlay, .menu-toggle,
-    .bitacora-progress-summary, #generatePdfBtn { /* También ocultamos el botón de generar PDF */
-        display: none !important; /* Usar !important para asegurar que se oculten */
-    }
-    .main-container {
-        display: block;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    .bitacoras-list, .daily-activity-section, #pdf-section { /* Asegurar que las secciones imprimibles se muestren */
-        display: block !important;
-        box-shadow: none;
-        border: none;
-        padding: 0;
-        margin-bottom: 20px;
-    }
-    /* Restablece la vista de tabla para impresión */
-    #bitacorasPeriodTable, #dailyActivitiesTable, .pdf-preview-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 0;
-        display: table; /* Fuerza el layout de tabla */
-        border-spacing: 0;
-    }
-    #bitacorasPeriodTable thead, #dailyActivitiesTable thead, .pdf-preview-table thead {
-        display: table-header-group; /* Muestra los encabezados de tabla */
-    }
-    #bitacorasPeriodTable tbody tr, #dailyActivitiesTable tbody tr, .pdf-preview-table tbody tr {
-        display: table-row;
-        background-color: transparent !important; /* Transparente para la impresión */
-        border: none;
-        box-shadow: none;
-        margin-bottom: 0;
-        padding: 0;
-    }
-    #bitacorasPeriodTable td, #dailyActivitiesTable td, .pdf-preview-table td {
-        display: table-cell;
-        border: 1px solid #ccc; /* Bordes suaves para impresión */
-        padding: 8px 10px;
-        font-size: 10pt;
-        text-align: left;
-    }
-    #bitacorasPeriodTable td::before, #dailyActivitiesTable td::before, .pdf-preview-table td::before {
-        content: none; /* Oculta los pseudo-elementos (labels de móviles) */
-    }
-    /* Asegura que los colores de fondo se impriman si es deseado */
-    #bitacorasPeriodTable thead, #dailyActivitiesTable thead, .pdf-preview-table thead {
-        background-color: #eee !important;
-        -webkit-print-color-adjust: exact;
-        color-adjust: exact;
-    }
-    #bitacorasPeriodTable tbody tr:nth-child(even), #dailyActivitiesTable tbody tr:nth-child(even), .pdf-preview-table tbody tr:nth-child(even) {
-        background-color: #f5f5f5 !important;
-        -webkit-print-color-adjust: exact;
-        color-adjust: exact;
-    }
-    h2, h3 {
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 1.2em;
-        color: #333;
-    }
-    .pdf-signatures {
-        display: flex !important;
-        justify-content: space-around;
-        margin-top: 30px;
-        gap: 20px;
-        page-break-inside: avoid; /* Evita romper el bloque de firmas en dos páginas */
-    }
-    .signature-block {
-        width: 45%;
-        max-width: none;
-        min-width: 200px;
+    .chart-card {
+        height: 300px; /* Altura un poco menor en móviles */
+        padding: var(--spacing-xs);
     }
 }
