@@ -883,7 +883,7 @@ const updateDashboardCharts = () => {
             label: 'Horas Registradas',
             data: hoursCounts,
             borderColor: 'var(--color-dark-purple)',
-            backgroundColor: 'rgba(80, 78, 118, 0.2)', // Color con opacidad
+            backgroundColor: 'rgba(0, 255, 38, 0.2)', // Color con opacidad
             tension: 0.3, // Suaviza la línea
             fill: true,
             pointBackgroundColor: 'var(--color-primary-green)'
