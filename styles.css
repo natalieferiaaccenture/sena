@@ -1,0 +1,1156 @@
+/* css/styles.css */
+
+/* --- Importar Fuente Roboto desde Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+/* Importar Font Awesome para iconos (si no está en HTML) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+
+/* --- Variables CSS: Paleta de Colores y Estilos para un look tipo Notion --- */
+:root {
+    /* Colores Principales - Adaptados a tu paleta de alto contraste y verde pastel */
+    --color-primary-green: #A0D9B3;      /* NUEVO: Verde pastel para acentos, botones primarios */
+    --color-dark-purple: #504E76;       /* Morado oscuro para texto principal en fondos claros, texto de inputs */
+    --color-black: #000000;              /* Negro puro para fondos de secciones clave (header, footer, sidebar) */
+    --color-white: #FFFFFF;              /* Blanco puro para fondos principales (body, cards, forms, tablas), texto sobre fondos oscuros, inputs */
+    --color-medium-gray: #C4C3E3;       /* Lila para bordes sutiles, botones secundarios, divisores (como en Notion) */
+    --color-light-gray-bg: #F8F8F8;     /* Un blanco muy suave para fondos de hover o sutiles diferencias (similar al gris claro de Notion) */
+
+    /* Colores de Alerta/Éxito/Advertencia */
+    --color-success: #28a745;
+    --color-warning: #FCDD9D;
+    --color-danger: #DC3545;
+
+    /* Sombras y Bordes - Sutiles, como los elementos de Notion */
+    --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --sombra-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --borde-suave: 1px solid var(--color-medium-gray);
+    --radio-borde: 8px;
+
+    /* Espaciado - Clave para la sensación "Notion" de bloques y claridad */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+}
+
+/* --- Base y Reset para un lienzo limpio --- */
+* {
+    box-sizing: border-box; /* Asegura que padding y border no aumenten el tamaño final del elemento */
+}
+
+html {
+    scroll-behavior: smooth; /* Desplazamiento suave para anclas */
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif; /* Fuente principal: Roboto */
+    font-weight: 400; /* Regular por defecto */
+    font-size: 0.95em; /* Ligeramente más pequeño para una sensación más compacta */
+    background-color: var(--color-white);
+    color: var(--color-dark-purple);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Evita el scroll horizontal no deseado */
+}
+
+/* Clase para deshabilitar el scroll del body cuando el sidebar está abierto */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+
+/* Restablecer pesos de fuente para elementos específicos si es necesario */
+b, strong, th {
+    font-weight: 700; /* Negrita para énfasis */
+}
+
+/* Títulos - Jerarquía clara como en Notion */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-dark-purple);
+    font-weight: 700; /* Negrita para títulos */
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+h1 { font-size: 2.5em; text-align: center; margin-top: 0; }
+h2 { font-size: 1.8em; }
+h3 {
+    font-size: 1.3em;
+    border-bottom: 1px solid var(--color-medium-gray);
+    padding-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+.mt-4 { margin-top: 2rem !important; }
+
+
+/* --- Header (Barra Superior - Estilo de barra de app) --- */
+.header {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    justify-content: space-between; /* Espacio entre logo, título y toggle */
+    align-items: center;
+    position: fixed; /* Fixed para que siempre esté visible */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa todo el ancho */
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; /* Permite que ocupe el espacio disponible */
+    justify-content: center; /* Centra el título y logo en el espacio central */
+    max-width: 1200px; /* Limita el ancho del contenido del header */
+    margin: 0 auto;
+    flex-wrap: nowrap; /* Evita que el contenido del header se envuelva */
+}
+
+.sena-logo {
+    height: 50px;
+    margin-right: var(--spacing-sm);
+    filter: invert(100%); /* Invierte colores para logo blanco sobre fondo negro */
+    flex-shrink: 0; /* Evita que el logo se encoja */
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.6em;
+    color: var(--color-white);
+    font-weight: 400;
+    text-align: center; /* Asegura el centrado si hay espacio */
+    flex-grow: 1; /* Permite que el título ocupe el espacio restante en el centro */
+}
+
+/* --- Menú Toggle Button (Icono de Hamburguesa) --- */
+.menu-toggle {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.8em;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    display: flex; /* Asegura que el icono y texto (si lo hay) estén alineados */
+    align-items: center;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0; /* Evita que el botón se encoja */
+}
+.menu-toggle:hover {
+    opacity: 0.8;
+}
+
+
+/* --- Sidebar (Menú Desplegable) --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Oculto por defecto */
+    width: 280px;
+    height: 100%;
+    background-color: var(--color-black);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1050; /* Más alto que el overlay */
+    transition: left 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md) 0;
+    overflow-y: auto; /* Para permitir scroll si el contenido es largo */
+}
+
+/* CLASE CORREGIDA: Usar 'active' para abrir el sidebar */
+.sidebar.active {
+    left: 0; /* Muestra el sidebar */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+    border-bottom: 1px solid var(--color-medium-gray);
+    margin-bottom: var(--spacing-md);
+}
+.sidebar-header h3 {
+    color: var(--color-white);
+    margin: 0;
+    font-size: 1.4em;
+    border-bottom: none;
+}
+.close-sidebar {
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.close-sidebar:hover {
+    opacity: 0.8;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-nav li {
+    margin-bottom: 5px;
+}
+.sidebar-nav .nav-item { /* Usamos .nav-item como en el JS, es un enlace */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 1.05em;
+    font-weight: 400;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: var(--radio-borde);
+    margin: 0 var(--spacing-sm);
+}
+.sidebar-nav .nav-item i {
+    font-size: 1.2em;
+    width: 25px; /* Ancho fijo para alinear iconos */
+    text-align: center;
+}
+.sidebar-nav .nav-item:hover,
+.sidebar-nav .nav-item.active { /* CLASE CORREGIDA para el estado activo */
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+}
+
+
+/* --- Sidebar Overlay --- */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 1040; /* Por debajo del sidebar, pero por encima del contenido principal */
+    opacity: 0;
+    visibility: hidden; /* Oculto por defecto, sin interacción */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* CLASE CORREGIDA: Usar 'active' para mostrar el overlay */
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* --- Main Container y gestión de secciones --- */
+.main-container {
+    flex-grow: 1;
+    max-width: 1300px; /* Ancho máximo para el contenido principal */
+    margin: calc(var(--spacing-lg) + 70px) auto var(--spacing-lg) auto; /* Ajuste para el header fijo */
+    padding: 0 var(--spacing-md);
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: 1fr; /* Mobile-first: Una columna */
+    align-items: start; /* Alinea los elementos en la parte superior del grid */
+}
+
+/* Oculta todas las secciones de contenido por defecto */
+/* NOTA: Asegúrate que todas tus secciones principales (<section>) dentro de <main> tengan un ID y esta estructura */
+main > section {
+    display: none;
+}
+
+/* Muestra solo la sección de Bitácoras por defecto al cargar la página */
+#bitacoras-section {
+    display: block;
+}
+/* Asegúrate que el card de progreso se muestre junto con la sección de bitácoras */
+.bitacora-progress-summary {
+    display: block; /* Este card se muestra siempre o lo controlas con JS */
+}
+
+/* --- Cards --- */
+.card {
+    background-color: var(--color-white);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    padding: var(--spacing-md);
+    border: var(--borde-suave);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: var(--color-dark-purple);
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+/* --- Progress Summary Card --- */
+.bitacora-progress-summary {
+    grid-column: 1 / -1; /* Ocupa todo el ancho en layout de grid */
+    text-align: center;
+    padding: var(--spacing-md);
+    background-color: #ffffff;
+    border: 1px solid var(--color-medium-gray);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bitacora-progress-summary h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-dark-purple);
+    font-size: 1.2em;
+    border-bottom: none;
+}
+
+.bitacora-progress-summary p {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--color-dark-purple);
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-bar-container {
+    width: 80%;
+    max-width: 300px;
+    height: 10px;
+    background-color: var(--color-medium-gray);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: var(--spacing-sm);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--color-primary-green);
+    width: 0%; /* Controlado por JS */
+    transition: width 0.5s ease-in-out;
+    border-radius: 5px;
+}
+
+/* --- Forms --- */
+.bitacora-period-section {
+    background-color: var(--color-white);
+    color: var(--color-dark-purple);
+}
+
+#bitacoraPeriodForm, #dailyActivityForm {
+    display: grid;
+    gap: var(--spacing-sm);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Mínimo 250px, se ajusta automáticamente */
+    background-color: var(--color-white);
+    color: var(--color-dark-purple);
+    padding: var(--spacing-md);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+}
+
+#bitacoraPeriodForm h3, #dailyActivityForm h3 {
+    grid-column: 1 / -1; /* Ocupa todas las columnas disponibles */
+    text-align: center;
+    color: var(--color-dark-purple);
+    border-bottom: 2px solid var(--color-primary-green);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 300;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-dark-purple);
+    font-size: 0.9em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--color-medium-gray);
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 400;
+    color: var(--color-dark-purple);
+    background-color: var(--color-white);
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-primary-green);
+    box-shadow: 0 0 0 3px rgba(160, 217, 179, 0.25);
+    outline: none;
+}
+
+.form-actions {
+    grid-column: 1 / -1; /* Ocupa todas las columnas */
+    display: flex;
+    justify-content: flex-end; /* Alinea botones a la derecha */
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+/* --- Buttons --- */
+.btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: none;
+}
+.btn-primary {
+    background-color: var(--color-primary-green);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background-color: #8CCCA3; /* Tono más oscuro de verde al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(160, 217, 179, 0.2);
+}
+
+.btn-secondary {
+    background-color: var(--color-medium-gray);
+    color: var(--color-dark-purple);
+}
+
+.btn-secondary:hover {
+    background-color: #A9A8C5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+.btn-warning {
+    background-color: var(--color-warning);
+    color: var(--color-dark-purple);
+}
+.btn-warning:hover {
+    background-color: #E2C58F;
+}
+.btn-danger {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+.btn-danger:hover {
+    background-color: #C82333;
+}
+
+
+/* --- Tables --- */
+.table-actions {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.search-input {
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    max-width: 350px; /* Limita el ancho en pantallas grandes */
+    padding: 10px 12px;
+    border: 1px solid var(--color-medium-gray);
+    border-radius: 5px;
+    font-size: 0.95em;
+    font-weight: 400;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--color-white);
+    color: var(--color-dark-purple);
+}
+.search-input:focus {
+    border-color: var(--color-primary-green);
+    box-shadow: 0 0 0 3px rgba(160, 217, 179, 0.25);
+    outline: none;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Permite scroll horizontal en tablas grandes */
+    width: 100%;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    border: var(--borde-suave); /* Agrega borde para un look más consistente */
+}
+
+#bitacorasPeriodTable, #dailyActivitiesTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-white);
+}
+
+#bitacorasPeriodTable thead, #dailyActivitiesTable thead {
+    background-color: var(--color-light-gray-bg);
+    color: var(--color-dark-purple);
+}
+
+#bitacorasPeriodTable th, #bitacorasPeriodTable td,
+#dailyActivitiesTable th, #dailyActivitiesTable td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-medium-gray);
+    vertical-align: top;
+    font-weight: 400;
+    color: var(--color-dark-purple);
+    font-size: 0.9em;
+}
+
+#bitacorasPeriodTable th, #dailyActivitiesTable th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    white-space: nowrap; /* Evita que el texto de la cabecera se rompa */
+}
+
+#bitacorasPeriodTable tbody tr:nth-child(even), #dailyActivitiesTable tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+#bitacorasPeriodTable tbody tr:hover, #dailyActivitiesTable tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.no-data-message {
+    text-align: center;
+    padding: var(--spacing-md);
+    color: var(--color-dark-purple);
+    font-style: italic;
+    background-color: var(--color-white);
+    border-radius: var(--radio-borde);
+    margin-top: var(--spacing-md);
+    border: 1px dashed var(--color-medium-gray);
+}
+
+/* Table action buttons */
+.action-buttons button {
+    margin-right: var(--spacing-xs);
+    padding: 6px 10px;
+    font-size: 0.8em;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    border: none;
+    white-space: nowrap; /* Evita que los botones se rompan en varias líneas */
+}
+/* Colores de los botones de acción se definen globalmente arriba con .btn-warning, .btn-danger, etc. */
+
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    background-color: var(--color-white);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+}
+.pagination button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    font-weight: 700;
+    border: none;
+    background-color: var(--color-primary-green); /* Botones de paginación primarios */
+    color: var(--color-white);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.pagination button:hover:not(:disabled) {
+    background-color: #8CCCA3;
+}
+.pagination button:disabled {
+    background-color: var(--color-medium-gray);
+    cursor: not-allowed;
+    color: #888;
+}
+.pagination span {
+    font-weight: 400;
+    color: var(--color-dark-purple);
+    font-size: 1em;
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    text-align: center;
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    font-size: 0.8em;
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
+    flex-shrink: 0; /* Evita que el footer se encoja si el contenido es escaso */
+}
+
+/* --- Specific title styling --- */
+.bitacoras-list h3 {
+    color: var(--color-dark-purple);
+    text-align: center;
+}
+
+/* --- PDF Section Styles --- */
+#pdf-section {
+    display: none; /* Hidden by default, shown by JS */
+}
+
+.pdf-header-info {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-medium-gray);
+}
+.pdf-header-info h2 {
+    font-size: 1.5em;
+    margin-bottom: var(--spacing-xs);
+}
+.pdf-header-info p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.pdf-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-md);
+    border: 1px solid var(--color-medium-gray); /* Borde principal de la tabla */
+    background-color: var(--color-white);
+}
+
+.pdf-preview-table th, .pdf-preview-table td {
+    border: 1px solid var(--color-medium-gray);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 0.85em;
+    color: var(--color-dark-purple);
+    word-wrap: break-word; /* Permite que el texto se rompa */
+}
+
+.pdf-preview-table .bitacora-header-row td {
+    background-color: var(--color-light-gray-bg);
+    font-weight: 700;
+    padding: 12px;
+    text-align: center;
+    font-size: 1em;
+    color: var(--color-black);
+}
+
+.pdf-preview-table .activity-header-row th {
+    background-color: #E6E6E6; /* Un gris un poco más oscuro para los encabezados de actividad */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    padding: 8px 12px;
+    color: var(--color-dark-purple);
+}
+
+.pdf-preview-table .activity-detail-row td {
+    vertical-align: top;
+}
+
+.pdf-preview-table .no-activity-message-row td {
+    font-style: italic;
+    text-align: center;
+    color: #666;
+    padding: 10px;
+    background-color: #FAFAFA;
+}
+
+.pdf-signatures {
+    display: flex;
+    justify-content: space-around;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+    flex-wrap: wrap; /* Permite que se envuelvan en pantallas pequeñas */
+}
+
+.signature-block {
+    text-align: center;
+    flex-basis: 45%; /* Para que ocupen casi la mitad */
+    max-width: 300px;
+    min-width: 200px; /* Ancho mínimo para legibilidad */
+}
+
+.signature-line {
+    border-bottom: 1px solid var(--color-dark-purple);
+    width: 80%;
+    margin: 30px auto 5px auto; /* Espacio para la firma */
+}
+
+.signature-name {
+    font-weight: 700;
+    font-size: 1.1em;
+    color: var(--color-dark-purple);
+}
+.signature-role {
+    font-size: 0.9em;
+    color: #666;
+}
+
+#generatePdfBtn {
+    display: block;
+    width: fit-content;
+    margin: var(--spacing-md) auto;
+    padding: 12px 25px;
+    font-size: 1.1em;
+}
+
+/* --- Responsive Layout (Mobile-First) --- */
+
+/* Extra small devices (phones, 320px and down) */
+@media (max-width: 480px) {
+    body {
+        font-size: 0.8em; /* Base font size a 12.8px si el base es 16px (0.8 * 16) */
+    }
+    :root {
+        --spacing-xs: 3px;
+        --spacing-sm: 8px;
+        --spacing-md: 15px;
+        --spacing-lg: 20px;
+    }
+
+    .header {
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+    .sena-logo {
+        height: 35px;
+    }
+    .header h1 {
+        font-size: 1.2em;
+    }
+    .menu-toggle {
+        font-size: 1.5em;
+        padding: 0px; /* Reducir padding del botón de toggle */
+    }
+
+    .sidebar {
+        width: 250px; /* Ancho ligeramente menor del sidebar */
+        left: -250px;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .sidebar-header {
+        padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+    }
+    .sidebar-header h3 {
+        font-size: 1.2em;
+    }
+    .close-sidebar {
+        font-size: 1.3em;
+    }
+    .sidebar-nav .nav-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.9em;
+        gap: var(--spacing-xs);
+    }
+    .sidebar-nav .nav-item i {
+        font-size: 1em;
+        width: 20px;
+    }
+
+    .main-container {
+        padding: 0 var(--spacing-xs); /* Padding horizontal muy reducido */
+        margin-top: calc(var(--spacing-lg) + 60px); /* Ajuste para header más pequeño */
+        gap: var(--spacing-md);
+    }
+    .card {
+        padding: var(--spacing-sm);
+    }
+
+    #bitacoraPeriodForm, #dailyActivityForm {
+        gap: var(--spacing-xs);
+        padding: var(--spacing-sm);
+        grid-template-columns: 1fr; /* Una columna para formularios en móviles muy pequeños */
+    }
+    .form-group label {
+        font-size: 0.8em;
+        margin-bottom: 2px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 7px 8px;
+        font-size: 0.85em;
+        min-height: 35px; /* Asegura un tamaño tocable */
+    }
+    .form-actions {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+
+    .table-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-xs);
+    }
+    .search-input {
+        width: 100%;
+        max-width: none;
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+
+    /* Mobile Table (Card View) - General (applies up to 767px, but scaled for smallest screens here) */
+    .table-responsive {
+        box-shadow: none;
+        border: none;
+        overflow-x: hidden;
+    }
+    #bitacorasPeriodTable, #dailyActivitiesTable {
+        border-collapse: separate;
+        border-spacing: 0 5px; /* Espacio entre "tarjetas" de fila */
+        background-color: transparent;
+    }
+    #bitacorasPeriodTable thead, #dailyActivitiesTable thead {
+        display: none;
+    }
+    #bitacorasPeriodTable tbody tr, #dailyActivitiesTable tbody tr {
+        display: block;
+        margin-bottom: 5px;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-medium-gray);
+        border-radius: 6px;
+        box-shadow: var(--sombra-suave);
+        padding: var(--spacing-xs);
+    }
+    #bitacorasPeriodTable td, #dailyActivitiesTable td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        text-align: right;
+        border-bottom: none;
+        padding: 2px 0;
+        font-size: 0.8em; /* Fuente más pequeña para el contenido de la celda */
+        word-break: break-word;
+        white-space: normal;
+    }
+    #bitacorasPeriodTable td:not(:last-child), #dailyActivitiesTable td:not(:last-child) {
+        border-bottom: 1px dashed var(--color-light-gray-bg);
+    }
+    #bitacorasPeriodTable td:last-child, #dailyActivitiesTable td:last-child {
+        text-align: left;
+        padding-top: var(--spacing-xs);
+        justify-content: flex-start;
+        flex-wrap: wrap; /* Permite que los botones de acción se envuelvan */
+    }
+    #bitacorasPeriodTable td::before, #dailyActivitiesTable td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        margin-right: var(--spacing-xs);
+        color: var(--color-dark-purple);
+        text-align: left;
+        min-width: 60px; /* Reducido al mínimo */
+        max-width: 40%;
+        flex-shrink: 0;
+        font-size: 0.75em; /* Fuente más pequeña para las etiquetas */
+    }
+    .action-buttons {
+        flex-direction: column;
+        gap: 3px;
+        margin-top: 5px;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .action-buttons button {
+        width: 100%;
+        padding: 5px 8px;
+        font-size: 0.7em;
+        min-height: 25px;
+    }
+    .pagination {
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+    }
+    .pagination button {
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
+    .pagination span {
+        font-size: 0.85em;
+    }
+
+    .pdf-signatures {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-lg);
+    }
+    .signature-block {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        max-width: 250px;
+    }
+}
+
+/* Small devices (phones, 481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    body {
+        font-size: 0.85em; /* Ligeramente más grande que los extra pequeños */
+    }
+    :root {
+        --spacing-xs: 5px;
+        --spacing-sm: 10px;
+        --spacing-md: 18px;
+        --spacing-lg: 25px;
+    }
+    .header {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+    .sena-logo {
+        height: 40px;
+    }
+    .header h1 {
+        font-size: 1.4em;
+    }
+    .menu-toggle {
+        font-size: 1.7em;
+    }
+    .main-container {
+        padding: 0 var(--spacing-sm);
+        margin-top: calc(var(--spacing-lg) + 65px);
+    }
+    #bitacoraPeriodForm, #dailyActivityForm {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Permite dos columnas si hay espacio */
+    }
+    /* Las reglas de tabla móvil (card view) del @media (max-width: 480px) se siguen aplicando y se ven bien aquí */
+}
+
+/* Medium devices (tablets, 768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    body {
+        font-size: 0.9em;
+    }
+    .menu-toggle {
+        /* Mantiene el toggle visible en tablets, pero lo puedes ocultar si prefieres un sidebar siempre abierto */
+        display: flex;
+    }
+    .main-container {
+        padding: 0 var(--spacing-md);
+        margin-top: calc(var(--spacing-lg) + 70px);
+        /* Aquí puedes mantener el layout de una columna para las secciones o cambiarlo */
+        grid-template-columns: 1fr;
+    }
+    #bitacoraPeriodForm, #dailyActivityForm {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas en tablets */
+    }
+    /* Restablece la vista de tabla normal para tablets */
+    .table-responsive {
+        overflow-x: auto; /* Mantiene el scroll horizontal si es necesario */
+        box-shadow: var(--sombra-suave);
+        border: var(--borde-suave);
+    }
+    #bitacorasPeriodTable, #dailyActivitiesTable {
+        border-collapse: collapse;
+        border-spacing: 0;
+        background-color: var(--color-white);
+    }
+    #bitacorasPeriodTable thead, #dailyActivitiesTable thead {
+        display: table-header-group; /* Muestra el thead */
+    }
+    #bitacorasPeriodTable tbody tr, #dailyActivitiesTable tbody tr {
+        display: table-row;
+        margin-bottom: 0;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    #bitacorasPeriodTable td, #dailyActivitiesTable td {
+        display: table-cell;
+        text-align: left;
+        border-bottom: 1px solid var(--color-medium-gray);
+        padding: 10px 12px;
+        font-size: 0.9em;
+        white-space: normal;
+    }
+    #bitacorasPeriodTable td::before, #dailyActivitiesTable td::before {
+        content: none; /* Oculta los pseudo-elementos */
+    }
+    .action-buttons {
+        flex-direction: row; /* Vuelve a poner los botones en fila */
+        gap: var(--spacing-xs);
+        margin-top: 0;
+        justify-content: flex-start;
+    }
+    .action-buttons button {
+        width: auto;
+        padding: 6px 10px;
+        font-size: 0.8em;
+        min-height: auto;
+    }
+    .pdf-signatures {
+        flex-direction: row; /* Vuelve a layout horizontal */
+        justify-content: space-around;
+        gap: var(--spacing-md);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    body {
+        font-size: 0.95em; /* Vuelve al tamaño de fuente base */
+    }
+    .menu-toggle {
+        /* Si en escritorio siempre quieres el sidebar abierto, oculta el toggle */
+        display: none;
+    }
+    .sidebar {
+        /* Si quieres un sidebar siempre abierto, ajusta esto */
+        left: 0; /* Asegura que el sidebar esté visible en escritorio */
+        position: sticky; /* Se mantiene en la posición de scroll */
+        top: 0; /* Alineado con el top del viewport */
+        height: 100vh; /* Ocupa el alto completo del viewport */
+        padding-top: calc(var(--spacing-md) + 70px); /* Espacio para el header fijo */
+    }
+    .sidebar-overlay {
+        display: none; /* No se necesita overlay si el sidebar siempre está abierto */
+    }
+    body.sidebar-open {
+        overflow: auto; /* Permite el scroll del body en escritorio */
+    }
+
+    .main-container {
+        /* Si el sidebar es sticky y "empuja" el contenido */
+        margin-left: 280px; /* Ancho del sidebar */
+        margin-top: calc(var(--spacing-lg) + 70px); /* Ajuste para el header fijo */
+        grid-template-columns: 0.8fr 1.2fr; /* Layout de dos columnas para secciones */
+    }
+    .bitacora-period-section {
+        grid-column: 1 / 2;
+    }
+    .bitacoras-list {
+        grid-column: 2 / 3;
+    }
+    .daily-activity-section, #pdf-section {
+        grid-column: 1 / -1; /* Estas secciones ocupan todo el ancho */
+    }
+    #bitacoraPeriodForm, #dailyActivityForm {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas en formularios */
+    }
+    .pdf-signatures {
+        justify-content: space-around;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .main-container {
+        max-width: 1500px; /* Aumenta el ancho máximo para pantallas muy grandes */
+        grid-template-columns: 0.7fr 1.3fr; /* Ajuste de proporción si es necesario */
+    }
+}
+
+
+/* Print styles */
+@media print {
+    body {
+        background-color: #fff;
+        color: #000;
+        font-size: 12pt;
+    }
+    /* Oculta elementos que no son relevantes para la impresión */
+    .header, .footer, .bitacora-period-section, .table-actions, .pagination, .action-buttons,
+    #dailyActivityForm, #dailyActivitySectionTitle, .sidebar, .sidebar-overlay, .menu-toggle,
+    .bitacora-progress-summary, #generatePdfBtn { /* También ocultamos el botón de generar PDF */
+        display: none !important; /* Usar !important para asegurar que se oculten */
+    }
+    .main-container {
+        display: block;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .bitacoras-list, .daily-activity-section, #pdf-section { /* Asegurar que las secciones imprimibles se muestren */
+        display: block !important;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    /* Restablece la vista de tabla para impresión */
+    #bitacorasPeriodTable, #dailyActivitiesTable, .pdf-preview-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        display: table; /* Fuerza el layout de tabla */
+        border-spacing: 0;
+    }
+    #bitacorasPeriodTable thead, #dailyActivitiesTable thead, .pdf-preview-table thead {
+        display: table-header-group; /* Muestra los encabezados de tabla */
+    }
+    #bitacorasPeriodTable tbody tr, #dailyActivitiesTable tbody tr, .pdf-preview-table tbody tr {
+        display: table-row;
+        background-color: transparent !important; /* Transparente para la impresión */
+        border: none;
+        box-shadow: none;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    #bitacorasPeriodTable td, #dailyActivitiesTable td, .pdf-preview-table td {
+        display: table-cell;
+        border: 1px solid #ccc; /* Bordes suaves para impresión */
+        padding: 8px 10px;
+        font-size: 10pt;
+        text-align: left;
+    }
+    #bitacorasPeriodTable td::before, #dailyActivitiesTable td::before, .pdf-preview-table td::before {
+        content: none; /* Oculta los pseudo-elementos (labels de móviles) */
+    }
+    /* Asegura que los colores de fondo se impriman si es deseado */
+    #bitacorasPeriodTable thead, #dailyActivitiesTable thead, .pdf-preview-table thead {
+        background-color: #eee !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+    #bitacorasPeriodTable tbody tr:nth-child(even), #dailyActivitiesTable tbody tr:nth-child(even), .pdf-preview-table tbody tr:nth-child(even) {
+        background-color: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+    h2, h3 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.2em;
+        color: #333;
+    }
+    .pdf-signatures {
+        display: flex !important;
+        justify-content: space-around;
+        margin-top: 30px;
+        gap: 20px;
+        page-break-inside: avoid; /* Evita romper el bloque de firmas en dos páginas */
+    }
+    .signature-block {
+        width: 45%;
+        max-width: none;
+        min-width: 200px;
+    }
+}
